@@ -5,6 +5,7 @@ import {
   UseGuards,
   Res,
   Req,
+  Get,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../../src/auth/guards/jwt-auth/jwt-auth.guard';
 import { WalletService } from './wallet.service';
@@ -67,6 +68,32 @@ export class WalletController {
         success: true,
         data: response,
         message: 'Currency converted successfully',
+      });
+    } catch (error) {
+      return apiResponse(res, {
+        success: false,
+        error: error.message,
+      });
+    }
+  }
+
+  @Get('balances')
+  @Roles(Role.USER)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  async getWalletBalances(
+    @Req() req: AuthenticatedRequest,
+    @Res() res: Response,
+  ) {
+    try {
+      const balances = await this.walletService.getWalletBalances(req.user.id);
+      const response = {
+        balances,
+      };
+
+      return apiResponse(res, {
+        success: true,
+        data: response,
+        message: 'Wallet balances retrieved successfully',
       });
     } catch (error) {
       return apiResponse(res, {

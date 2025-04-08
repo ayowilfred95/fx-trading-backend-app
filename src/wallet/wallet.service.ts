@@ -229,4 +229,22 @@ export class WalletService {
       throw appError(error);
     }
   }
+
+  async getWalletBalances(userId: number) {
+    const wallet = await this.entityManager.findOne(Wallet, {
+      where: { user: { id: userId } },
+      relations: ['balances']
+    });
+  
+    if (!wallet) {
+      throw appError('Wallet not found');
+    }
+  
+    return wallet.balances.map(balance => ({
+      currencyCode: balance.currencyCode,
+      balance: Number(balance.balance)
+    }));
+  }
+
+
 }

@@ -75,13 +75,6 @@ Docker configuration includes:
 
 ### 🧬 Database Migrations
 
-Run the following to apply database schema:
-```bash
-npm run typeorm migration:run
-```
-
----
-
 ### 🚀 Start Application
 
 ```bash
@@ -170,10 +163,8 @@ Example: `/wallet/fund`
 ### 🔐 Security Features
 
 - Password Hashing: `bcrypt`
-- Rate Limiting: `@nestjs/throttler`
 - Request Validation: `class-validator`
-- CSRF Protection: `@nestjs/csurf`
-- Headers: `helmet`
+- Role Guard: `Passport Strategy`
 
 ---
 
@@ -213,7 +204,7 @@ async fetchLatestRates() {
   try {
     // Update rates
   } catch (error) {
-    // Retry or fallback
+    // fallback
   }
 }
 ```
