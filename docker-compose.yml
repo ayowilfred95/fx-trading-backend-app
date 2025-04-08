@@ -1,0 +1,21 @@
+services:
+  db:
+    image: postgres:15
+    container_name: Fx_postgres_db
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+    ports:
+      - "5432:5432"
+    volumes:
+      - Fx_postgres_data:/var/lib/postgresql/data
+    networks:
+      - fx_network
+
+networks:
+  fx_network:
+    driver: bridge
+
+volumes:
+  Fx_postgres_data:
