@@ -89,7 +89,7 @@ Visit: [http://localhost:3000](http://localhost:3000)
 
 ### 🔗 Postman Collection
 
-Find the full API reference in the linked [Postman Collection](https://www.postman.com/your-collection-link).
+Find the full API reference in the linked [Postman Collection](https://documenter.getpostman.com/view/28637839/2sB2cVgNKr).
 
 ---
 
