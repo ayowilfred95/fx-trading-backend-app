@@ -81,7 +81,7 @@ Docker configuration includes:
 npm run start:dev
 ```
 
-Visit: [http://localhost:3000](http://localhost:3000)
+Visit: [http://localhost:3000/v1](http://localhost:3000/v1)
 
 ---
 
@@ -95,9 +95,9 @@ Find the full API reference in the linked [Postman Collection](https://documente
 
 ### 🔐 Authentication
 
-- **POST** `/auth/register`
-- **POST** `/auth/login`
-- **POST** `/auth/verify`
+- **POST** `/v1/auth/register`
+- **POST** `/v1/auth/login`
+- **POST** `/v1/auth/verify`
 
 Each route returns consistent response structures including JWT tokens and user data.
 
@@ -121,11 +121,11 @@ Example: `/auth/register`
 
 ### 💳 Wallet Management
 
-- **POST** `/wallet/fund`
-- **POST** `/wallet/convert`
-- **POST** `/wallet/trade`
+- **POST** `/v1/wallet/fund`
+- **POST** `/v1/wallet/convert`
+- **POST** `/v1/wallet/trade`
 
-Example: `/wallet/fund`
+Example: `/v1/wallet/fund`
 ```json
 {
   "success": true,
