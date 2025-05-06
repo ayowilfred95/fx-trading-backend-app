@@ -15,7 +15,7 @@ export const hashGenerate = async (plainText: string): Promise<string> => {
 
 export const hashCompare = async (plain: string, hash: string): Promise<boolean> => {
     return await bcrypt.compare(plain, hash);
-  };
+};
   
   
 

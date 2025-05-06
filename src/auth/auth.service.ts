@@ -18,8 +18,6 @@ import { VerifyOtpDto, verifyOtpSchema } from './schemas/verify-otp.schema';
 import { Role } from 'src/auth/enums/role.enum';
 import { AuthenticatedRequest } from '../common/types/authenticated-request';
 
-
-
 @Injectable()
 export class AuthService {
   constructor(
@@ -28,7 +26,6 @@ export class AuthService {
     private readonly jwtService: JwtService,
     private readonly otpService: OtpService,
     private readonly mailService: EmailService,
-    
   ) {}
 
   async validateUser(data: LoginUserDto) {
@@ -39,7 +36,7 @@ export class AuthService {
     if (!isPasswordMatch) throw appError('Invalid password');
     delete user.password;
 
-    return { id: user.id, user };
+    return { user };
   }
 
   async register(registerUserData: RegisterUserDto) {
@@ -49,6 +46,11 @@ export class AuthService {
         registerUserSchema,
         registerUserData,
       );
+
+      const userExist = await this.userService.findByEmail(
+        registerUserData.email,
+      );
+      if (userExist) throw appError('User already exists!');
 
       // Get role from DTO or default to USER
       const role = registerUserData.role || Role.USER;
@@ -93,10 +95,10 @@ export class AuthService {
       // Extract validated data from parsed.result
       const { email, password } = loginUserData;
 
-      const { id, user } = await this.validateUser({ email, password });
+      const { user } = await this.validateUser({ email, password });
 
       // Generate tokens for the user
-      const { accessToken } = await this.generateTokens(id);
+      const { accessToken } = await this.generateTokens(user.id);
       return {
         user,
         accessToken,
@@ -106,7 +108,7 @@ export class AuthService {
     }
   }
 
-  async verify(verifyOtp: VerifyOtpDto,  @Req() req: AuthenticatedRequest) {
+  async verify(verifyOtp: VerifyOtpDto, @Req() req: AuthenticatedRequest) {
     try {
       // Validate input using Zod schema
       this.validationService.validateSchema(verifyOtpSchema, verifyOtp);
